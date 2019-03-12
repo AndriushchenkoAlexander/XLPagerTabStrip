@@ -147,7 +147,14 @@ open class PagerTabStripViewController: UIViewController, UIScrollViewDelegate {
     open override var shouldAutomaticallyForwardAppearanceMethods: Bool {
         return false
     }
-
+    
+    open func removeContentViewControllers() {
+        self.viewControllers.forEach { childController in
+            childController.view.removeFromSuperview()
+            childController.removeFromParent()
+        }
+        self.viewControllers.removeAll()
+    }
     open func moveToViewController(at index: Int, animated: Bool = true) {
         guard isViewLoaded && view.window != nil && currentIndex != index else {
             preCurrentIndex = index
